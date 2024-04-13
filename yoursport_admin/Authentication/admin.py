@@ -10,3 +10,4 @@ admin.site.register(FootballTeam)
 admin.site.register(FAQ)
 admin.site.register(EndUser)
 admin.site.register(EndUserDetail)
+
