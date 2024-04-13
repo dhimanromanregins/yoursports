@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import (CustomUser, Pricing, Contact,PasswordResetToken,
-                     FootballTeam,PlayerDetail, FAQ)
+                     FootballTeam,PlayerDetail, FAQ, EndUserDetail, EndUser)
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -94,3 +94,14 @@ class FAQSerializer(serializers.ModelSerializer):
     class Meta:
         model = FAQ
         fields = ['id', 'question', 'answer']
+
+
+class EndUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EndUser
+        fields = '__all__'
+
+class EndUserDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EndUserDetail
+        fields = '__all__'

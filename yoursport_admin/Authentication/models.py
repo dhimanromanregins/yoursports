@@ -103,4 +103,22 @@ class FAQ(models.Model):
     answer = models.TextField()
 
 
+from django.core.validators import MinValueValidator
+
+class EndUser(models.Model):
+    language = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
+    phone_number = models.BigIntegerField(unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class EndUserDetail(models.Model):
+    user = models.ForeignKey(EndUser, on_delete=models.CASCADE)
+    gender = models.CharField(max_length=255)
+    birth_date = models.DateField()
+    location = models.CharField(max_length=255)
+
+
 

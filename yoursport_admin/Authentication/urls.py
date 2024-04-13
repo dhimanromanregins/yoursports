@@ -3,7 +3,7 @@ from .views import (RegistrationAPIView, LoginAPIView, PricingListAPIView,
                     ContactListCreateAPIView,ContactRetrieveUpdateDestroyAPIView,
                     UserListCreateAPIView ,UserRetrieveUpdateDestroyAPIView
                     ,ForgotPasswordAPIView ,ResetPasswordAPIView, StaffUserListAPIView,
-                    FootballTeamCreateAPIView, PlayerDetailAPIView, FAQList, FAQDetail)
+                    FootballTeamCreateAPIView, PlayerDetailAPIView, FAQList, FAQDetail, EndUserList,EndUserDetail, EndUserDetailProfileView, EndUserDetailView, EndUserDetailList)
 
 urlpatterns = [
     path('register/', RegistrationAPIView.as_view(), name='register'),
@@ -22,4 +22,8 @@ urlpatterns = [
     path('player-details/<int:pk>/', PlayerDetailAPIView.as_view(), name='player-detail'),
     path('faqs/', FAQList.as_view()),
     path('faqs/<int:pk>/', FAQDetail.as_view()),
+    path('endusers/', EndUserList.as_view(), name='enduser-list'),
+    path('endusers/<int:pk>/', EndUserDetailView.as_view(), name='enduser-detail'),  # Update this line
+    path('userprofile/', EndUserDetailList.as_view(), name='enduserdetail-list'),
+    path('userprofile/<int:user_id>/', EndUserDetailProfileView.as_view(), name='enduserdetail-detail'),
 ]

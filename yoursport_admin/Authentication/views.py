@@ -3,10 +3,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import (UserSerializer, PricingSerializer, ContactSerializer,
                           PasswordResetTokenSerializer,FootballTeamSerializer,
-                          StaffUserSerializer, PlayerDetailSerializer, FAQSerializer)
+                          StaffUserSerializer, PlayerDetailSerializer, FAQSerializer, EndUserDetailSerializer, EndUserSerializer)
 from django.http import Http404
 from .models import (CustomUser, Pricing, Contact, PasswordResetToken,FootballTeam,
-                     PlayerDetail, FAQ)
+                     PlayerDetail, FAQ, EndUserDetail, EndUser)
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated, AllowAny
 import uuid
@@ -315,4 +315,98 @@ class FAQDetail(APIView):
     def delete(self, request, pk):
         faq = self.get_object(pk)
         faq.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+class EndUserList(APIView):
+    def get(self, request):
+        users = EndUser.objects.all()
+        serializer = EndUserSerializer(users, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = EndUserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class EndUserDetailList(APIView):
+    def get(self, request):
+        user_details = EndUserDetail.objects.all()
+        serializer = EndUserDetailSerializer(user_details, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = EndUserDetailSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class EndUserDetailView(APIView):
+    def get_object(self, pk):
+        try:
+            return EndUser.objects.get(pk=pk)
+        except EndUser.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk):
+        user = self.get_object(pk)
+        serializer = EndUserSerializer(user)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        user = self.get_object(pk)
+        serializer = EndUserSerializer(user, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def patch(self, request, pk):
+        user = self.get_object(pk)
+        serializer = EndUserSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        user = self.get_object(pk)
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+class EndUserDetailProfileView(APIView):
+    def get_object(self, user_id):
+        try:
+            return EndUserDetail.objects.get(user_id=user_id)
+        except EndUserDetail.DoesNotExist:
+            raise Http404
+
+    def get(self, request, user_id):
+        user_detail = self.get_object(user_id)
+        serializer = EndUserDetailSerializer(user_detail)
+        return Response(serializer.data)
+
+    def put(self, request, user_id):
+        user_detail = self.get_object(user_id)
+        serializer = EndUserDetailSerializer(user_detail, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def patch(self, request, user_id):
+        user_detail = self.get_object(user_id)
+        serializer = EndUserDetailSerializer(user_detail, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, user_id):
+        user_detail = self.get_object(user_id)
+        user_detail.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
