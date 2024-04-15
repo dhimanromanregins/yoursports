@@ -17,7 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
 class PricingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pricing
-        fields = ('id', 'amount', 'description', 'gerneral', 'school_corporate')
+        fields = ('id', 'amount', 'description', 'header','gerneral', 'school_corporate')
 
 
 class ContactSerializer(serializers.ModelSerializer):

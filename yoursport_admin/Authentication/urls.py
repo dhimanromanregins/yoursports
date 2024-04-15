@@ -3,7 +3,9 @@ from .views import (RegistrationAPIView, LoginAPIView, PricingListAPIView,
                     ContactListCreateAPIView,ContactRetrieveUpdateDestroyAPIView,
                     UserListCreateAPIView ,UserRetrieveUpdateDestroyAPIView
                     ,ForgotPasswordAPIView ,ResetPasswordAPIView, StaffUserListAPIView,
-                    FootballTeamCreateAPIView, PlayerDetailAPIView, FAQList, FAQDetail, EndUserList,EndUserDetail, EndUserDetailProfileView, EndUserDetailView, EndUserDetailList)
+                    FootballTeamCreateAPIView, PlayerDetailAPIView, FAQList,
+                    FAQDetail, EndUserList,EndUserDetail, EndUserDetailProfileView, EndUserDetailView,
+                    EndUserDetailList, GeneralPricingList, CorporatePricingList)
 
 urlpatterns = [
     path('register/', RegistrationAPIView.as_view(), name='register'),
@@ -26,4 +28,6 @@ urlpatterns = [
     path('endusers/<int:pk>/', EndUserDetailView.as_view(), name='enduser-detail'),  # Update this line
     path('userprofile/', EndUserDetailList.as_view(), name='enduserdetail-list'),
     path('userprofile/<int:user_id>/', EndUserDetailProfileView.as_view(), name='enduserdetail-detail'),
+    path('price/general/', GeneralPricingList.as_view(), name='general-pricing-list'),
+    path('price/corporate/', CorporatePricingList.as_view(), name='corporate-pricing-list'),
 ]

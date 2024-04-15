@@ -44,7 +44,8 @@ class CustomUser(AbstractBaseUser):
 
 
 class Pricing(models.Model):
-    amount = models.BigIntegerField()
+    amount = models.CharField(max_length=2000)
+    header = models.TextField(null=True, blank=True)
     description = models.TextField()
     gerneral = models.BooleanField(default=False)
     school_corporate = models.BooleanField(default=False)
